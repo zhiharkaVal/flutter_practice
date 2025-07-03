@@ -4,12 +4,13 @@ import 'package:quiz_app/styled_text.dart';
 class StyledButtonWithIcon extends StatelessWidget {
   final String text;
   final double fontSize;
-  const StyledButtonWithIcon(this.text, this.fontSize, {super.key});
+  final void Function() onClick;
+  const StyledButtonWithIcon(this.text, this.fontSize, this.onClick, {super.key});
 
   @override
   Widget build(context) {
     return ElevatedButton.icon(
-      onPressed: () {},
+      onPressed: onClick,
       style: ElevatedButton.styleFrom(
         backgroundColor: Color.fromARGB(180, 34, 69, 57),
         foregroundColor: Colors.white,

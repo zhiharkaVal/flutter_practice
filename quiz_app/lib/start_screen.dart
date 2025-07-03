@@ -3,7 +3,8 @@ import 'package:quiz_app/styled_text.dart';
 import 'package:quiz_app/styled_button_with_icon.dart';
 
 class StartScreen extends StatelessWidget {
-  const StartScreen({super.key});
+  final void Function() startQuiz;
+  const StartScreen(this.startQuiz, {super.key});
 
   @override
   Widget build(context) {
@@ -19,7 +20,7 @@ class StartScreen extends StatelessWidget {
           const SizedBox(height: 35),
           StyledText("Welcome to test your knowledge of Flutter!", 25),
           const SizedBox(height: 35),
-          StyledButtonWithIcon("Start Quiz", 20)
+          StyledButtonWithIcon("Start Quiz", 20, startQuiz)
        ]
       )
     );
