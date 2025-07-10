@@ -38,7 +38,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
             StyledText(currentQuestion.question, 25),
             const SizedBox(height: 25),
             // 'Three dots' is somewhat similar to flatMap
-            ...currentQuestion.getShuffledAnswers().map((answerOption) {
+            ...currentQuestion.shuffledAnswers.map((answerOption) {
               return StyledAnswerOptButton(answerOption, () {
                   questionAnswered(answerOption);
                 },

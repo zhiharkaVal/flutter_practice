@@ -15,12 +15,12 @@ class StartScreen extends StatelessWidget {
           Image.asset(
             "assets/images/quiz-logo.png",
             width: 250,
-            color: Color.fromARGB(205, 255, 255, 255),
+            color: Color.fromARGB(76, 4, 37, 26),
           ),
           const SizedBox(height: 35),
           StyledText("Welcome to test your knowledge of Flutter!", 25),
           const SizedBox(height: 35),
-          StyledButtonWithIcon("Start Quiz", 20, startQuiz)
+          StyledButtonWithIcon("Start Quiz", 20, Icons.arrow_forward_rounded, IconAlignment.end, startQuiz)
        ]
       )
     );
