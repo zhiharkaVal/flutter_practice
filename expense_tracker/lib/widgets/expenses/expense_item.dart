@@ -11,8 +11,10 @@ class ExpenseItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(expense.title),
+            // titleLarge will either use default settings or use the one defined in main.dart
+            Text(expense.title, style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 5),
             Row(
               children: [
