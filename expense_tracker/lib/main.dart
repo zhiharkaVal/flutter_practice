@@ -13,6 +13,12 @@ var kDarkColorScheme = ColorScheme.fromSeed(
 );
 
 void main() {
+  // In case application is a mobile app and we want to lock
+  // application to be running only in preferred orientation
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //  DeviceOrientation.portraitUp
+  // ]).then((fn) {
   runApp(
     MaterialApp(
       darkTheme: ThemeData.dark().copyWith(
@@ -63,4 +69,5 @@ void main() {
       home: Expenses(),
     ),
   );
+//  });
 }
