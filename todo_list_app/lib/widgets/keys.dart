@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:todo_list_app/widgets/todo_item.dart';
+import 'package:todo_list_app/widgets/checkbox_todo_item.dart';
 import 'package:todo_list_app/models/todo.dart';
 
 
@@ -62,9 +61,12 @@ class _KeysState extends State<Keys> {
         Expanded(
           child: Column(
             children: [
-              // for (final todo in _orderedTodoList) TodoItem(todo.text, todo.priority),
               for (final todo in _orderedTodoList)
-                TodoItem(
+                CheckboxTodoItem(
+                  // Key is needed to connect state to an element, if
+                  // element has a changing state
+                  // key: ValueKey(todo.text),
+                  key: ObjectKey(todo),
                   todo.text,
                   todo.priority,
                 ),

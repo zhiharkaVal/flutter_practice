@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-enum Priority { urgent, normal, low }
+import 'package:todo_list_app/models/todo.dart';
 
 class TodoItem extends StatelessWidget {
   const TodoItem(this.text, this.priority, {super.key});

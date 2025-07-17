@@ -1,4 +1,4 @@
-import 'package:todo_list_app/widgets/todo_item.dart';
+enum Priority { urgent, normal, low }
 
 class Todo {
   const Todo(this.text, this.priority);
