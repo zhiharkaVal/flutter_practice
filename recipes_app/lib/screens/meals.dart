@@ -5,9 +5,9 @@ import '../widgets/meal_item.dart';
 import 'meal.dart';
 
 class MealsView extends StatelessWidget {
-  final String title;
+  final String? title;
   final List<Meal> meals;
-  const MealsView({super.key, required this.title, required this.meals});
+  const MealsView({super.key, this.title, required this.meals});
 
   void selectMeal(BuildContext context, Meal meal) {
     Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => MealDetailsView(meal: meal)));
@@ -40,9 +40,13 @@ class MealsView extends StatelessWidget {
       );
     }
 
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: content,
-    );
+    if (title == null) {
+      return content;
+    } else {
+      return Scaffold(
+        appBar: AppBar(title: Text(title!)),
+        body: content,
+      );
+    }
   }
 }
