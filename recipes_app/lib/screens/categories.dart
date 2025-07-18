@@ -3,9 +3,11 @@ import 'package:recipes_app/data/seed_data.dart';
 import 'package:recipes_app/screens/meals.dart';
 import 'package:recipes_app/widgets/category_grid_item.dart';
 import '../models/category.dart';
+import '../models/meal.dart';
 
 class CategoriesView extends StatelessWidget {
-  const CategoriesView({super.key});
+  final void Function(Meal meal) onToggleFavourite;
+  const CategoriesView({super.key, required this.onToggleFavourite});
 
   void _selectCategory(BuildContext context, Category category) {
     final filteredMeals = dummyMeals.where((meal) => meal.categories.contains(category.id)).toList();
@@ -13,7 +15,7 @@ class CategoriesView extends StatelessWidget {
     // Hence, push and pop
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) => MealsView(title: category.title, meals: filteredMeals),
+        builder: (ctx) => MealsView(title: category.title, meals: filteredMeals, onToggleFavourite: onToggleFavourite),
       ),
     );
   }
