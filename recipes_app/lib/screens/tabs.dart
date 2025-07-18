@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:recipes_app/screens/categories.dart';
+import 'package:recipes_app/screens/filters.dart';
 import 'package:recipes_app/screens/meals.dart';
 
+import '../data/seed_data.dart';
 import '../models/meal.dart';
+import '../widgets/side_drawer.dart';
+
+const _kInitialfilters = {Filter.glutenFree: false, Filter.lactoseFree: false, Filter.vegetarian: false};
 
 class TabsView extends StatefulWidget {
   const TabsView({super.key});
@@ -14,8 +19,9 @@ class TabsView extends StatefulWidget {
 }
 
 class _TabsViewState extends State<TabsView> {
-  int _selectedViewIndex = 0;
   final List<Meal> _favourites = [];
+  int _selectedViewIndex = 0;
+  Map<Filter, bool> _filters = _kInitialfilters;
 
   void _selectView(int index) {
     setState(() {
@@ -26,6 +32,19 @@ class _TabsViewState extends State<TabsView> {
   void _showInfoMessage(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message), duration: const Duration(seconds: 5)));
+  }
+
+  void _setView(String identifier) async {
+    Navigator.of(context).pop();
+    if (identifier == 'filters') {
+      final result = await Navigator.of(
+        context,
+      ).push<Map<Filter, bool>>(MaterialPageRoute(builder: (ctx) => FiltersView(currentFilters: _filters)));
+
+      setState(() {
+        _filters = result ?? _kInitialfilters;
+      });
+    }
   }
 
   void _toggleMealFavouriteStatus(Meal meal) {
@@ -46,7 +65,19 @@ class _TabsViewState extends State<TabsView> {
 
   @override
   Widget build(BuildContext context) {
-    Widget activeView = CategoriesView(onToggleFavourite: _toggleMealFavouriteStatus);
+    final availableMeals = dummyMeals.where((meal) {
+      if (_filters[Filter.glutenFree]! && !meal.isGlutenFree) {
+        return false;
+      }
+      if (_filters[Filter.lactoseFree]! && !meal.isLactoseFree) {
+        return false;
+      }
+      if (_filters[Filter.vegetarian]! && !meal.isVegetarian) {
+        return false;
+      }
+      return true;
+    }).toList();
+    Widget activeView = CategoriesView(availableMeals: availableMeals, onToggleFavourite: _toggleMealFavouriteStatus);
     var activePageTitle = 'Categories';
     if (_selectedViewIndex == 1) {
       activeView = MealsView(meals: _favourites, onToggleFavourite: _toggleMealFavouriteStatus);
@@ -55,6 +86,7 @@ class _TabsViewState extends State<TabsView> {
 
     return Scaffold(
       appBar: AppBar(title: Text(activePageTitle)),
+      drawer: SideDrawer(onSelectView: _setView),
       body: activeView,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedViewIndex,

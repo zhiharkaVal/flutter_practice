@@ -6,12 +6,13 @@ import '../models/category.dart';
 import '../models/meal.dart';
 
 class CategoriesView extends StatelessWidget {
+  final List<Meal> availableMeals;
   final void Function(Meal meal) onToggleFavourite;
-  const CategoriesView({super.key, required this.onToggleFavourite});
+  const CategoriesView({super.key, required this.onToggleFavourite, required this.availableMeals});
 
   void _selectCategory(BuildContext context, Category category) {
-    final filteredMeals = dummyMeals.where((meal) => meal.categories.contains(category.id)).toList();
-    // Add a new "screen" on top of the previous screen creating a screen stack.
+    final filteredMeals = availableMeals.where((meal) => meal.categories.contains(category.id)).toList();
+    // Adds a new "screen" on top of the previous screen creating a screen stack.
     // Hence, push and pop
     Navigator.of(context).push(
       MaterialPageRoute(
