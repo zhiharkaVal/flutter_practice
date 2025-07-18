@@ -5,7 +5,8 @@ import '../models/meal.dart';
 
 class MealItem extends StatelessWidget {
   final Meal meal;
-  const MealItem({super.key, required this.meal});
+  final void Function(Meal meal) onMealItemSelected;
+  const MealItem({super.key, required this.meal, required this.onMealItemSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class MealItem extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       elevation: 2,
       child: InkWell(
-        onTap: () {},
+        onTap: () => onMealItemSelected(meal),
         child: Stack(
           // Ordered from latest in the background to the first in the front.
           children: [
@@ -45,6 +46,7 @@ class MealItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 15),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         MealItemTrait(icon: Icons.schedule, label: '${meal.duration} min'),
                         const SizedBox(width: 15),

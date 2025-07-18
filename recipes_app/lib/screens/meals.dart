@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:recipes_app/models/meal.dart';
 
 import '../widgets/meal_item.dart';
+import 'meal.dart';
 
 class MealsView extends StatelessWidget {
   final String title;
   final List<Meal> meals;
   const MealsView({super.key, required this.title, required this.meals});
+
+  void selectMeal(BuildContext context, Meal meal) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => MealDetailsView(meal: meal)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,8 @@ class MealsView extends StatelessWidget {
     if (meals.isNotEmpty) {
       content = ListView.builder(
         itemCount: meals.length,
-        itemBuilder: (ctx, index) => MealItem(meal: meals[index]),
+        itemBuilder: (ctx, index) =>
+            MealItem(meal: meals[index], onMealItemSelected: (meal) => selectMeal(context, meal)),
       );
     }
 
