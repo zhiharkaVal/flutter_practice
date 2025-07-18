@@ -33,6 +33,10 @@
 **/.pub-cache/
 **/.pub/
 **/build/
+**/android/
+**/windows/
+**/macos/
+**/ios/
 
 # Symbolication related
 app.*.symbols
