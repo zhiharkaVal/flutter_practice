@@ -16,7 +16,7 @@ const availableCategories = [
   Category(id: 'c10', title: 'Summer', color: Colors.teal),
 ];
 
-const dummyMeals = [
+const seedMeals = [
   Meal(
     id: 'm1',
     categories: ['c1', 'c2'],

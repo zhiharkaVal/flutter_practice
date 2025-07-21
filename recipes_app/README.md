@@ -9,9 +9,7 @@ Implemented as part of the Udemy course.
 * Dart SDK, `=> v3.8.1`
 * Android SDK
 * Google fonts
-    ```bash
-      flutter pub add google_fonts
-    ```
+* Flutter Riverpod
 
 ## Other
 

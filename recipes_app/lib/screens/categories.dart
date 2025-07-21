@@ -7,8 +7,7 @@ import '../models/meal.dart';
 
 class CategoriesView extends StatelessWidget {
   final List<Meal> availableMeals;
-  final void Function(Meal meal) onToggleFavourite;
-  const CategoriesView({super.key, required this.onToggleFavourite, required this.availableMeals});
+  const CategoriesView({super.key, required this.availableMeals});
 
   void _selectCategory(BuildContext context, Category category) {
     final filteredMeals = availableMeals.where((meal) => meal.categories.contains(category.id)).toList();
@@ -16,7 +15,7 @@ class CategoriesView extends StatelessWidget {
     // Hence, push and pop
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) => MealsView(title: category.title, meals: filteredMeals, onToggleFavourite: onToggleFavourite),
+        builder: (ctx) => MealsView(title: category.title, meals: filteredMeals),
       ),
     );
   }
