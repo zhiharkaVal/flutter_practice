@@ -66,17 +66,12 @@ class _CategoriesViewState extends State<CategoriesView> with SingleTickerProvid
             CategoryGridItem(category: category, onCategorySelected: () => _selectCategory(context, category)),
         ],
       ),
-      builder:  (context, child) => SlideTransition(
-          position: Tween(
-              begin: const Offset(0, 0.3), // animation starts 30% below action position
-              end: const Offset(0, 0),
-            ).animate(
-              CurvedAnimation(
-                parent: _animationController,
-                curve: Curves.easeInOut
-              )
-          ),
-          child: child
+      builder: (context, child) => SlideTransition(
+        position: Tween(
+          begin: const Offset(0, 0.3), // animation starts 30% below action position
+          end: const Offset(0, 0),
+        ).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOut)),
+        child: child,
       ),
     );
   }
