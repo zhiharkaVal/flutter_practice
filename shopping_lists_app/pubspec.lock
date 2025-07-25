@@ -115,14 +115,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.2"
-  jsonize:
-    dependency: "direct main"
-    description:
-      name: jsonize
-      sha256: "8d2bc2d4910cac2fbfc1069ac03627160dbc2665115a4ba7579422c972757f94"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.7.2+1"
   leak_tracker:
     dependency: transitive
     description:

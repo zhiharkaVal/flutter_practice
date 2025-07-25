@@ -34,30 +34,32 @@ class _ShoppingListViewState extends ConsumerState<ShoppingListView> {
     ref.read(shoppingListProvider.notifier).addShoppingItem(newItem);
   }
 
-  Widget _emptyShoppingListContent(String message) {
+  Widget _emptyShoppingListContent(String message, bool isLoading) {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            message,
-            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-            ),
-          ),
+          isLoading
+              ? const CircularProgressIndicator()
+              : Text(
+                  message,
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  ),
+                ),
         ],
       ),
     );
   }
 
-  Widget _shoppingListContent(List<GroceryItem> shoppingList) {
-    if (shoppingList.isNotEmpty) {
+  Widget _shoppingListContent(List<GroceryItem>? shoppingList) {
+    if (shoppingList != null && shoppingList.isNotEmpty) {
       return ListView.builder(
         itemCount: shoppingList.length,
         itemBuilder: (ctx, index) => ShoppingItem(item: shoppingList[index]),
       );
     } else {
-      return _emptyShoppingListContent('Your shopping list is empty.');
+      return _emptyShoppingListContent('Your shopping list is empty.', false);
     }
   }
 
@@ -78,8 +80,15 @@ class _ShoppingListViewState extends ConsumerState<ShoppingListView> {
         AsyncData(:final value) => _shoppingListContent(value),
         AsyncError() => _emptyShoppingListContent(
           'Oops, something went wrong...',
+          false,
         ),
-        _ => const CircularProgressIndicator(),
+        AsyncLoading() => _emptyShoppingListContent('Fetching data...', true),
+        _ => const Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [CircularProgressIndicator()],
+          ),
+        ),
       },
     );
   }
