@@ -15,6 +15,15 @@ class ShoppingListView extends ConsumerStatefulWidget {
 }
 
 class _ShoppingListViewState extends ConsumerState<ShoppingListView> {
+  @override
+  void initState() {
+    super.initState();
+
+    ref.listenManual(shoppingListProvider, (previous, next) {
+      // TODO show a snackbar/dialog
+    });
+  }
+
   void _addShoppingItem() async {
     final newItem = await Navigator.of(context).push<GroceryItem>(
       MaterialPageRoute(builder: (ctx) => const NewShoppingItemView()),
@@ -25,16 +34,13 @@ class _ShoppingListViewState extends ConsumerState<ShoppingListView> {
     ref.read(shoppingListProvider.notifier).addShoppingItem(newItem);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final shoppingList = ref.watch(shoppingListProvider);
-
-    Widget content = Center(
+  Widget _emptyShoppingListContent(String message) {
+    return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Your shopping list is empty',
+            message,
             style: Theme.of(context).textTheme.headlineMedium!.copyWith(
               color: Theme.of(context).colorScheme.onPrimaryContainer,
             ),
@@ -42,13 +48,24 @@ class _ShoppingListViewState extends ConsumerState<ShoppingListView> {
         ],
       ),
     );
+  }
 
+  Widget _shoppingListContent(List<GroceryItem> shoppingList) {
     if (shoppingList.isNotEmpty) {
-      content = ListView.builder(
+      return ListView.builder(
         itemCount: shoppingList.length,
         itemBuilder: (ctx, index) => ShoppingItem(item: shoppingList[index]),
       );
+    } else {
+      return _emptyShoppingListContent('Your shopping list is empty.');
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final AsyncValue<List<GroceryItem>> shoppingList = ref.watch(
+      shoppingListProvider,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -57,7 +74,13 @@ class _ShoppingListViewState extends ConsumerState<ShoppingListView> {
         ],
         title: const Text("Shopping list"),
       ),
-      body: content,
+      body: switch (shoppingList) {
+        AsyncData(:final value) => _shoppingListContent(value),
+        AsyncError() => _emptyShoppingListContent(
+          'Oops, something went wrong...',
+        ),
+        _ => const CircularProgressIndicator(),
+      },
     );
   }
 }

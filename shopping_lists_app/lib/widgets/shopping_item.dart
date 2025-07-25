@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/shopping_list_provider.dart';
 import '../models/grocery_item.dart';
-import '../utils/uuid_generator.dart';
 
 class ShoppingItem extends ConsumerWidget {
   final GroceryItem item;
